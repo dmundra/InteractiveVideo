@@ -91,6 +91,7 @@ InteractiveVideoQuestionCreator = (function () {
 			if( $('#show_best_solution').is(':checked')){
 				$('#subform_show_best_solution').show();
 			}
+			$('#il_prop_cont_limit_attempts').hide();
 		}
 		else
 		{
@@ -101,6 +102,7 @@ InteractiveVideoQuestionCreator = (function () {
 			$('#il_prop_cont_neutral_type').show();
 			$('#il_prop_cont_show_comment_field').hide();
 			$('#subform_show_best_solution').hide();
+			$('#il_prop_cont_limit_attempts').show();
 		}
 	};
 
@@ -157,7 +159,7 @@ InteractiveVideoQuestionCreator = (function () {
 	};
 
 	pub.Init = function () {
-		if(IVQuestionCreator.JSON.length === 0)
+		if(IVQuestionCreator.JSON.length === 0 && IVQuestionCreator.type !== 2)
 		{
 			InteractiveVideoQuestionCreator.appendEmptyJSON();
 		}

@@ -109,7 +109,7 @@ class SimpleChoiceQuestionFormEditGUI
 		if(isset($_POST['comment_time']))
 		{
 			$seconds = $_POST['comment_time'];
-			$time->setValueByArray(['comment_time' => (int)$seconds]);
+			$time->setValueByArray(['comment_time' => $seconds]);
 		}
 
 
@@ -216,8 +216,10 @@ class SimpleChoiceQuestionFormEditGUI
 				if(array_key_exists('question_data', $question_data))
 				{
                     if($question_data['question_data'] != null && array_key_exists('question_image', $question_data['question_data'])){
-                        $image_upload->setValue($question_data['question_data']['question_image']);
-                        $image_upload->setImage($question_data['question_data']['question_image']);
+                        if( $question_data['question_data']['question_image'] !== null) {
+                            $image_upload->setValue($question_data['question_data']['question_image']);
+                            $image_upload->setImage($question_data['question_data']['question_image']);
+                        }
                     }
 				}
 			}
@@ -408,7 +410,11 @@ class SimpleChoiceQuestionFormEditGUI
 				}
 			}
 			$question->setVariable('JSON', json_encode($answers));
-			$question->setVariable('QUESTION_TYPE', 0);
+            $post_type = 0;
+            if($post->has('question_type')) {
+                $post_type = $post->retrieve('question_type', $DIC->refinery()->kindlyTo()->int());
+            }
+			$question->setVariable('QUESTION_TYPE', $post_type);
 			$question->setVariable('QUESTION_TEXT');
 		}
 		$question->setVariable('LABEL_FEEDBACK_NEUTRAL',		json_encode($this->plugin->txt('feedback_neutral')));
